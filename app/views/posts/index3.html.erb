@@ -1,0 +1,174 @@
+<div class="main posts-index">
+  <div class="container">
+    <h1 class="posts-heading">スクワット記録一覧</h1>
+    <!--canvas js-->
+    <div id="chartContainer" style="height: 570px; width: 150%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <% @posts.each do |post| %>
+      <div class="posts-index-item">
+        <div class="post-left">
+          <img src="<%= "/user_images/#{post.user.image_name}" %>">
+        </div>
+        <div class="post-right">
+          <div class="post-user-name">  
+            <%= link_to(post.user.name, "/users/#{post.user.id}") %>
+          </div>
+            <%= link_to(post.kg, "/posts/#{post.id}") %> kg
+            <%= link_to(post.rep, "/posts/#{post.id}") %> 回
+             <% if post.rep == 1 %>
+              1RM<%= (post.kg.to_i / 1).round %>kg
+            <% elsif post.rep == 2 %>
+              1RM<%= (post.kg.to_i / 0.95).round %>kg
+            <% elsif post.rep == 3 %>
+              1RM<%= (post.kg.to_i / 0.93).round %>kg
+            <% elsif post.rep == 4 %>
+              1RM<%= (post.kg.to_i / 0.90).round %>kg
+            <% elsif post.rep == 5 %>
+              1RM<%= (post.kg.to_i / 0.87).round %>kg
+            <% elsif post.rep == 6 %>
+              1RM<%= (post.kg.to_i / 0.85).round %>kg
+            <% elsif post.rep == 7 %>
+              1RM<%= (post.kg.to_i / 0.83).round %>kg
+            <% elsif post.rep == 8 %>
+              1RM<%= (post.kg.to_i / 0.80).round %>kg
+            <% elsif post.rep == 9 %>
+              1RM<%= (post.kg.to_i / 0.77).round %>kg
+            <% elsif post.rep == 10 %>
+              1RM<%= (post.kg.to_i / 0.75).round %>kg
+            <% else %>
+              1RM<%= (post.kg.to_i / 0.75).round %>kg
+            <% end %>
+          <div class="post-time">
+             Date:<%= post.date %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+    
+  </div>
+</div>
+  
+<script>
+    var len = gon.myselfp.length
+    var aclen = Math.min(len, 4)
+    var datapoints1 = [];//とりあえず配列宣言。
+    //天才良小林の所業~start~
+    // console.log(len)
+    // console.log(gon.data1.length-1);// console.log("len= ",len);
+    // console.log(gon.data1[0].date);
+    // console.log(gon.data1[0].length);
+    var count = 0;
+    for(var i = 0; i < aclen ; i++){//降順と昇順で逆に
+      var j = aclen - i - 1;
+      console.log(j);
+      datapoints1[count] = { x: gon.myselfp[j].date,  y: Number(gon.myselfp[j].kg)  };
+      count++;
+      if(Number(gon.myselfp[j].kg2) != 0){
+        datapoints1[count] = { x: gon.myselfp[j].date,  y: Number(gon.myselfp[j].kg2)  };
+        count++;
+      }
+       if(Number(gon.myselfp[j].kg3) != 0){
+        datapoints1[count] = { x: gon.myselfp[j].date,  y: Number(gon.myselfp[j].kg3)  };
+        count++;
+      }
+    }
+    var len2 = gon.friend1p.length
+    var aclen2 = Math.min(len2, 4)
+    var datapointsf1 = [];//とりあえず配列宣言。
+    var countf1 = 0;
+    for(var i = 0; i < aclen2 ; i++){//降順と昇順で逆に
+      var j = aclen2 - i - 1;
+      console.log(j);
+      datapointsf1[countf1] = { x: gon.friend1p[j].date,  y: Number(gon.friend1p[j].kg)  };
+      countf1++;
+      if(Number(gon.friend1p[j].kg2) != 0){
+        datapointsf1[countf1] = { x: gon.friend1p[j].date,  y: Number(gon.friend1p[j].kg2)  };
+        countf1++;
+      }
+       if(Number(gon.friend1p[j].kg3) != 0){
+        datapointsf1[countf1] = { x: gon.friend1p[j].date,  y: Number(gon.friend1p[j].kg3)  };
+        countf1++;
+      }
+    }
+    
+    var len3 = gon.friend2p.length
+    var aclen3 = Math.min(len3, 4)
+    var datapointsf2 = [];//とりあえず配列宣言。
+    var countf2 = 0;
+    for(var i = 0; i < aclen3 ; i++){//降順と昇順で逆に
+      var j = aclen3 - i - 1;
+      console.log(j);
+      datapointsf2[countf2] = { x: gon.friend2p[j].date,  y: Number(gon.friend2p[j].kg)  };
+      countf2++;
+      if(Number(gon.friend2p[j].kg2) != 0){
+        datapointsf2[countf2] = { x: gon.friend2p[j].date,  y: Number(gon.friend2p[j].kg2)  };
+        countf2++;
+      }
+      if(Number(gon.friend2p[j].kg3) != 0){
+        datapointsf2[countf2] = { x: gon.friend2p[j].date,  y: Number(gon.friend2p[j].kg3)  };
+        countf2++;
+      }
+    }
+
+window.onload = function () {
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	zoomEnabled: true,
+	theme: "light2",
+	title:{	text: "Chart 友達と自分の比較"},
+	axisX:{
+		title: "Date",
+		valueFormatString: "########",
+		interval: 2
+	},
+	axisY:{
+		logarithmic: true, //change it to false
+		title: "kg",
+		titleFontColor: "#6D78AD",
+		lineColor: "#6D78AD",
+		gridThickness: 0,
+		lineThickness: 1,
+		includeZero: false,
+		labelFormatter: addSymbols
+	},
+	legend:{
+		verticalAlign: "top",
+		fontSize: 16,
+		dockInsidePlotArea: true
+	},
+	data: [{
+		type: "line",
+		xValueFormatString: "########",
+		showInLegend: true,
+		name: gon.myselfu.name,
+		dataPoints: datapoints1	},
+	{
+		type: "line",
+		xValueFormatString: "########",
+		showInLegend: true,
+		name: gon.friend1u.name,
+		dataPoints: datapointsf1
+	},
+	{
+		type: "line",
+		xValueFormatString: "########",
+		showInLegend: true,
+		name: gon.friend2u.name,
+		dataPoints: datapointsf2
+	}
+	]
+});
+chart.render();
+function addSymbols(e){
+	var suffixes = ["", "K", "M", "B"];
+	var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+	if(order > suffixes.length - 1)
+		order = suffixes.length - 1;
+	var suffix = suffixes[order];
+	return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
+}
+}
+
+</script>

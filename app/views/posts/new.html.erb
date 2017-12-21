@@ -1,0 +1,50 @@
+<div class="main posts-new">
+  <div class="container">
+    <h1 class="form-heading">新規記録</h1>
+    
+      <%= form_tag("/posts/create") do %>
+        <div class="form">
+          <div class="form-body">
+            <% @post.errors.full_messages.each do |message| %>
+              <div class="form-error">
+               <%= message %>
+              </div>
+            <% end %>
+            日付(例:20171231)
+          <textarea name="date"><%= @post.date %></textarea>
+          
+          <select size="1" name="menu" style="width: 500px; font-size: 18px">
+           <option value="ベンチプレス" >ベンチプレス</option>
+           <option value="デッドリフト" >デッドリフト</option>
+           <option value="スクワット" >スクワット</option>
+          </select>
+
+          重量(Kg)
+          <textarea name="kg"><%= @post.kg %></textarea>
+          回数(回)
+          <textarea name="rep"><%= @post.rep %></textarea>
+          <!--<select name="rep" id="select1"><%= @post.rep %>
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+            <option value=9>9</option>
+            <option value=10>10</option>
+      　　</select>        -->  
+          重量(Kg)
+          <textarea name="kg2"><%= @post.kg2 %></textarea>
+          回数(回)
+          <textarea name="rep2"><%= @post.rep2 %></textarea>
+          重量(Kg)
+          <textarea name="kg3"><%= @post.kg3 %></textarea>
+          回数(回)
+          <textarea name="rep3"><%= @post.rep3 %></textarea> 
+          <input type="submit" value="保存">
+           <% end %>
+  </div>
+</div>
+

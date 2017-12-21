@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Workspace</title>
+    <!--ゴン-->
+    <%= include_gon %>
+  　<%= stylesheet_link_tag    'application', media: 'all'%>
+    <%= javascript_include_tag 'application'%>
+　  <%= csrf_meta_tags %>
+</head>
+<body>
+    <header>
+      <div class="header-logo">
+        <%= link_to("塗布部", "/") %>
+      </div>
+      <ul class="header-menus">
+      <% if session[:user_id] %>
+        <% if session[:user_id] %>
+          <li>
+            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+          </li>
+        <% end %>
+        <li>
+          <%= link_to("ベンチ", "/posts/index") %>
+        </li>
+        <li>
+          <%= link_to("デッド", "/posts/index2") %>
+        </li>
+        <li>
+          <%= link_to("スクワット", "/posts/index3") %>
+        </li>
+        <li>
+          <%= link_to("塗布部とは", "/about") %>
+        </li>
+        <li>
+          <%= link_to("ユーザー一覧", "/users/index") %>
+        </li>
+        <li>
+          <%= link_to("新規記録", "/posts/new") %>
+        </li>
+         <li>
+          <%= link_to("ログアウト", "/logout", {method: :post}) %>
+         </li>
+        <% else %>
+        <li>
+          <%= link_to("塗布部とは", "/about") %>
+        </li>
+        <li>
+          <%= link_to("新規登録", "/signup") %>
+        </li>
+        <li>
+          <%= link_to("ログイン", "/login") %>
+        </li>
+        <% end %>
+      </ul>
+    </header>
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
+
+
+<%= yield %>
+</body>
+</html>

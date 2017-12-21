@@ -1,0 +1,250 @@
+<div class="main user-show">
+  <div class="container">
+    <div class="user">
+      <img src="<%= "/user_images/#{@user.image_name}" %>">
+      <h2>name: <%= @user.name %></h2>
+      <p>mail: <%= @user.email %></p>
+      <% if @user.id == @current_user.id %>
+        <%= link_to("編集", "/users/#{@user.id}/edit")%>
+      <% end %>
+    </div>
+
+    <!-- チャート-->
+    <canvas id="ChartDemo" width="300" height="300"></canvas>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+    <div id="chartContainer3" style="height: 300px; width: 100%;"></div>
+    
+  　
+    
+    
+    <% @user.posts.order('date desc').each do |post| %>
+      <div class="posts-index-item">
+        <div class="post-left">
+          <img src="<%= "/user_images/#{post.user.image_name}" %>">
+        </div>
+        <div class="post-right">
+          <div class="post-user-name">
+            <%= link_to(post.user.name, "/users/#{post.user.id}") %>
+          </div>
+          <%= link_to(post.menu, "/posts/#{post.id}") %>
+          1st:<%= link_to(post.kg, "/posts/#{post.id}") %>kg*
+          <%= link_to(post.rep, "/posts/#{post.id}") %>回
+          <% if post.kg2 %>
+            2nd:<%= link_to(post.kg2, "/posts/#{post.id}") %>kg*
+            <%= link_to(post.rep2, "/posts/#{post.id}") %>回
+          <% end %>
+          <% if post.kg3 %>
+          3rd:<%= link_to(post.kg3, "/posts/#{post.id}") %>kg*
+          <%= link_to(post.rep3, "/posts/#{post.id}") %>回
+          <% end %>
+          
+            <% if post.rep == 1 %>    <%　RM1 = (post.kg.to_i / 1).round %>
+            <% elsif post.rep == 2 %> <%　RM1 = (post.kg.to_i / 0.95).round %>
+            <% elsif post.rep == 3 %> <%　RM1 = (post.kg.to_i / 0.93).round %>
+            <% elsif post.rep == 4 %> <%　RM1 = (post.kg.to_i / 0.90).round %>
+            <% elsif post.rep == 5 %> <%　RM1 = (post.kg.to_i / 0.87).round %>
+            <% elsif post.rep == 6 %> <%　RM1 = (post.kg.to_i / 0.85).round %>
+            <% elsif post.rep == 7 %> <%　RM1 = (post.kg.to_i / 0.83).round %>
+            <% elsif post.rep == 8 %> <%　RM1 = (post.kg.to_i / 0.80).round %>
+            <% elsif post.rep == 9 %> <%　RM1 = (post.kg.to_i / 0.77).round %>
+            <% elsif post.rep == 10 %> <%　RM1 = (post.kg.to_i / 0.75).round %>
+            <% else %>                 <%　RM1 = (post.kg.to_i / 0.75).round %>
+            <% end %>
+            
+            <% if post.rep2 == 1 %>    <%　RM2 = (post.kg2.to_i / 1).round %>
+            <% elsif post.rep2 == 2 %> <%　RM2 = (post.kg2.to_i / 0.95).round %>
+            <% elsif post.rep2 == 3 %> <%　RM2 = (post.kg2.to_i / 0.93).round %>
+            <% elsif post.rep2 == 4 %> <%　RM2 = (post.kg2.to_i / 0.90).round %>
+            <% elsif post.rep2 == 5 %> <%　RM2 = (post.kg2.to_i / 0.87).round %>
+            <% elsif post.rep2 == 6 %> <%　RM2 = (post.kg2.to_i / 0.85).round %>
+            <% elsif post.rep2 == 7 %> <%　RM2 = (post.kg2.to_i / 0.83).round %>
+            <% elsif post.rep2 == 8 %> <%　RM2 = (post.kg2.to_i / 0.80).round %>
+            <% elsif post.rep2 == 9 %> <%　RM2 = (post.kg2.to_i / 0.77).round %>
+            <% elsif post.rep2 == 10 %><%　RM2 = (post.kg2.to_i / 0.75).round %>
+            <% else %>                 <%　RM2 = (post.kg2.to_i / 0.75).round %>
+            <% end %>
+            
+            <% if post.rep3 == 1 %>    <%　RM3 = (post.kg3.to_i / 1).round %>
+            <% elsif post.rep3 == 2 %> <%　RM3 = (post.kg3.to_i / 0.95).round %>
+            <% elsif post.rep3 == 3 %> <%　RM3 = (post.kg3.to_i / 0.93).round %>
+            <% elsif post.rep3 == 4 %> <%　RM3 = (post.kg3.to_i / 0.90).round %>
+            <% elsif post.rep3 == 5 %> <%　RM3 = (post.kg3.to_i / 0.87).round %>
+            <% elsif post.rep3 == 6 %> <%　RM3 = (post.kg3.to_i / 0.85).round %>
+            <% elsif post.rep3 == 7 %> <%　RM3 = (post.kg3.to_i / 0.83).round %>
+            <% elsif post.rep3 == 8 %> <%　RM3 = (post.kg3.to_i / 0.80).round %>
+            <% elsif post.rep3 == 9 %> <%　RM3 = (post.kg3.to_i / 0.77).round %>
+            <% elsif post.rep3 == 10 %><%　RM3 = (post.kg3.to_i / 0.75).round %>
+            <% else %>                 <%　RM3 = (post.kg3.to_i / 0.75).round %>
+            <% end %>
+           
+            <script type="text/javascript">
+            var RMS = Math.max(<%=　RM1 %>, <%=　RM2 %>,<%=　RM3 %>)
+            document.write("1RM:"+RMS+ "kg")
+            </script>
+            
+          <div class="post-time">
+             Date:<%= post.date %>
+          </div>
+          
+          <% if @user.id == @current_user.id %>
+           <div class="post-menus">
+             <%= link_to("編集", "/posts/#{post.id}/edit") %>
+             <%= link_to("削除", "/posts/#{post.id}/destroy", {method: "post"}) %>
+           </div>
+          <% end %>
+          
+          
+        </div>
+      </div>
+    <% end %>
+    
+  </div>
+</div>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+<script type="text/javascript">
+    //ベンチ要素
+    var len = gon.data1.length
+    var recentlyData1 = [];
+    // console.log(len)
+    var count = 0;
+    for(var i = 0; i < len ; i++){//降順と昇順で逆に
+      var j = len - i - 1;
+      console.log(j);
+      recentlyData1[count] = { x: gon.data1[j].date,  y: Number(gon.data1[j].kg)  };
+      count++;
+      if(Number(gon.data1[j].kg2) != 0){
+        recentlyData1[count] = { x: gon.data1[j].date,  y: Number(gon.data1[j].kg2)  };
+        count++;
+      }
+      if(Number(gon.data1[j].kg3) != 0){
+        recentlyData1[count] = { x: gon.data1[j].date,  y: Number(gon.data1[j].kg3)  };
+        count++;
+      }
+    }
+    //天才良小林の所業~end
+    //デッドリフト要素
+    var len2 = gon.data2.length
+    var recentlyData2 = [];
+    // console.log(len2)
+    var count = 0;
+    for(var i = 0; i < len2 ; i++){//降順と昇順で逆に
+      var j = len2 - i - 1;
+      console.log(j);
+      recentlyData2[count] = { x: gon.data2[j].date,  y: Number(gon.data2[j].kg)  };
+      count++;
+      if(Number(gon.data2[j].kg2) != 0){
+        recentlyData2[count] = { x: gon.data2[j].date,  y: Number(gon.data2[j].kg2)  };
+        count++;
+      }
+      if(Number(gon.data2[j].kg3) != 0){
+        recentlyData2[count] = { x: gon.data2[j].date,  y: Number(gon.data2[j].kg3)  };
+        count++;
+      }
+    }
+    //スクワット要素
+    var len3 = gon.data3.length
+    var recentlyData3 = [];
+    // console.log(len3)
+    var count = 0;
+    for(var i = 0; i < len3 ; i++){//降順と昇順で逆に
+      var j = len3 - i - 1;
+      console.log(j);
+      recentlyData3[count] = { x: gon.data3[j].date,  y: Number(gon.data3[j].kg)  };
+      count++;
+      if(Number(gon.data3[j].kg2) != 0){
+        recentlyData3[count] = { x: gon.data3[j].date,  y: Number(gon.data3[j].kg2)  };
+        count++;
+      }
+      if(Number(gon.data3[j].kg3) != 0){
+        recentlyData3[count] = { x: gon.data3[j].date,  y: Number(gon.data3[j].kg3)  };
+        count++;
+      }
+    }
+window.onload = function () {
+     //ここからベンチプレス
+    var recentlyData = recentlyData1;
+  	var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+		  text: "ベンチプレス記録推移" 
+		},
+			axisX:{
+		title: "Date",
+		valueFormatString: "########",
+		interval: 2
+	},
+		data: [   {
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "splineArea",
+			dataPoints: recentlyData		}]
+	});
+	chart.render();
+	  //ここからデッドリフト
+	  var recentlyData = recentlyData2;
+		var chart2 = new CanvasJS.Chart("chartContainer2", {
+		title:{
+		  text: "デッドリフト記録推移" 
+		},
+			axisX:{
+		title: "Date",
+		valueFormatString: "########",
+		interval: 2
+	},
+		data: [   {
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "splineArea",
+			dataPoints: recentlyData		}]
+	});
+	chart2.render();
+	//ここからスクワット
+	  var recentlyData = recentlyData3;
+		var chart3 = new CanvasJS.Chart("chartContainer3", {
+		title:{
+		  text: "スクワット記録推移" 
+		},
+			axisX:{
+		title: "Date",
+		valueFormatString: "########",
+		interval: 2
+	},
+		data: [   {
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "splineArea",
+			dataPoints: recentlyData		}]
+	});
+	chart3.render();
+} 
+
+//htmlタグの設定したIDを取得
+var ctx = document.getElementById("ChartDemo");
+//グラフを描画
+
+console.log(gon.data1[j].kg)
+console.log(gon.data2[j].kg)
+console.log(gon.data3[j].kg)
+console.log(Number(gon.data1[j].kg))
+var ChartDemo = new Chart(ctx, {
+    //グラフのタイプを指定 (line,bar,radar,polarArea,pie,doughnut,bubble)
+    type: 'radar',
+    //描画するグラフのデータを設定
+    data: {
+　　　　　//X軸のラベル設定
+        labels: ["ベンチプレス", "デッドリフト", "スクワット"],
+　　　　　//仰臥するデータの細かな設定
+        datasets: [
+        　{
+          //ここに細かなデータの設定を記述
+          data: [gon.data1[j].kg,gon.data2[j].kg,gon.data3[j].kg]
+        　
+        　  
+        　}
+    　]
+    },
+    options: {
+        //細かなオプションを設定したい場合はここに記述
+    }
+});
+</script>

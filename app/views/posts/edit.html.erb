@@ -1,0 +1,32 @@
+<div class="main posts-new">
+  <div class="container">
+    <h1 class="form-heading">編集する</h1>
+    <%= form_tag("/posts/#{@post.id}/update") do %>
+    <div class="form">
+        
+      <div class="form-body">
+          <% @post.errors.full_messages.each do |message| %>
+            <div class="form-error">
+              <%= message %>
+            </div>
+          <% end %>
+        日付(例:20171231)
+        <textarea name="date"><%= @post.date %></textarea>
+        1st:重量(Kg)  
+        <textarea name="kg"><%= @post.kg %></textarea>
+        回数(回)
+    　　　<textarea name="rep"><%= @post.rep %></textarea>
+        2nd:重量(Kg)  
+        <textarea name="kg2"><%= @post.kg2 %></textarea>
+        回数(回)
+    　　　<textarea name="rep2"><%= @post.rep2 %></textarea>
+        3rd:重量(Kg)  
+        <textarea name="kg3"><%= @post.kg3 %></textarea>
+        回数(回)
+    　　　<textarea name="rep3"><%= @post.rep3 %></textarea>
+        <input type="submit" value="保存">
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
